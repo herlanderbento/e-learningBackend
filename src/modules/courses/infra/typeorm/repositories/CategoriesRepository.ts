@@ -1,8 +1,8 @@
+import { ICategoriesRepository } from "@modules/courses/repositories/ICategoriesRepository";
 import { getRepository, Repository } from "typeorm";
-import { ICategoryRepository } from "@modules/courses/repositories/ICategoryRepository";
 import { Category } from "../entities/Category";
 
-class CategoryRepository implements ICategoryRepository {
+class CategoriesRepository implements ICategoriesRepository {
   private repository: Repository<Category>;
 
   constructor() {
@@ -20,6 +20,10 @@ class CategoryRepository implements ICategoryRepository {
   async findByName(name: string): Promise<Category> {
     return await this.repository.findOne({ name });
   }
+
+  async list(): Promise<Category[]> {
+    return await this.repository.find();
+  }
 }
 
-export { CategoryRepository };
+export { CategoriesRepository };

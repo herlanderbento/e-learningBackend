@@ -1,7 +1,7 @@
 import { Category } from "@modules/courses/infra/typeorm/entities/Category";
-import { ICategoryRepository } from "../ICategoryRepository";
+import { ICategoriesRepository } from "../ICategoriesRepository";
 
-class CategoryRepositoryInMemory implements ICategoryRepository {
+class CategoriesRepositoryInMemory implements ICategoriesRepository {
   private repository: Category[];
 
   constructor() {
@@ -23,6 +23,10 @@ class CategoryRepositoryInMemory implements ICategoryRepository {
   async findByName(name: string): Promise<Category> {
     return this.repository.find((category) => category.name === name);
   }
+
+  async list(): Promise<Category[]> {
+    return this.repository;
+  }
 }
 
-export { CategoryRepositoryInMemory };
+export { CategoriesRepositoryInMemory };

@@ -1,9 +1,8 @@
+import { CategoriesRepository } from "@modules/courses/infra/typeorm/repositories/CategoriesRepository";
+import { ICategoriesRepository } from "@modules/courses/repositories/ICategoriesRepository";
 import { container } from "tsyringe";
 
-import { ICategoryRepository } from "@modules/courses/repositories/ICategoryRepository";
-import { CategoryRepository } from "@modules/courses/infra/typeorm/repositories/CategoryRepository";
-
-container.registerSingleton<ICategoryRepository>(
-  "CategoryRepository",
-  CategoryRepository
+container.registerSingleton<ICategoriesRepository>(
+  "CategoriesRepository",
+  CategoriesRepository
 );
