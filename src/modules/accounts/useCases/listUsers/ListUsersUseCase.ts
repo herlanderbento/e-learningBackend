@@ -9,7 +9,7 @@ class ListUsersUseCase {
     private usersRepository: IUsersRepository
   ) {}
   async execute(): Promise<User[]> {
-    const list = await this.usersRepository.listAllUsers();
+    const list = await this.usersRepository.findAllUsers();
 
     return list;
   }

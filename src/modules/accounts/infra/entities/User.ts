@@ -20,9 +20,30 @@ class User {
   @Column()
   email: string;
 
+  @Column()
+  phone: string;
+
+  @Column()
+  bi: string;
+
+  @Column()
+  county: string;
+
+  @Column()
+  city: string;
+
+  @Column()
+  province: string;
+
+  @Column()
+  country: string;
+
   @Exclude()
   @Column()
   password: string;
+
+  @Column()
+  avatar: string;
 
   @Column()
   isAdmin: boolean;

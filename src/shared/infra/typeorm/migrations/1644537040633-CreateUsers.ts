@@ -20,14 +20,51 @@ export class CreateUsers1644537040633 implements MigrationInterface {
             type: "varchar",
           },
           {
+            name: "phone",
+            type: "varchar",
+            isNullable: true,
+          },
+          {
+            name: "bi",
+            type: "varchar",
+            isUnique: true,
+            isNullable: true,
+          },
+          {
+            name: "county",
+            type: "varchar",
+            isNullable: true,
+          },
+          {
+            name: "city",
+            type: "varchar",
+            isNullable: true,
+          },
+          {
+            name: "province",
+            type: "varchar",
+            isNullable: true,
+          },
+          {
+            name: "country",
+            type: "varchar",
+            isNullable: true,
+          },
+          {
             name: "password",
             type: "varchar",
+          },
+          {
+            name: "avatar",
+            type: "varchar",
+            isNullable: true,
           },
           {
             name: "isAdmin",
             type: "boolean",
             default: false,
           },
+
           {
             name: "created_at",
             type: "timestamp",

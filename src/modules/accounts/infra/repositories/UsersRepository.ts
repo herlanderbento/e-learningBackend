@@ -24,12 +24,24 @@ class UsersRepository implements IUsersRepository {
     return await this.repository.findOne({ id });
   }
 
-  async listAllUsers(): Promise<User[]> {
+  async findAllUsers(): Promise<User[]> {
     return this.repository.find();
   }
 
   async findByEmail(email: string): Promise<User> {
     return await this.repository.findOne({ email });
+  }
+
+  async findByBI(bi: string): Promise<User> {
+    const user = await this.repository.findOne({ bi });
+
+    return user;
+  }
+
+  async save(user: User): Promise<User> {
+    const users = await this.repository.save(user);
+
+    return users;
   }
 }
 
