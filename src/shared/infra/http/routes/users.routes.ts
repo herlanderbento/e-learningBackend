@@ -10,6 +10,7 @@ import { UpdateUserAvatarController } from "@modules/accounts/useCases/updateUse
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 import { ResetUserPasswordController } from "@modules/accounts/useCases/resetUserPassword/ResetUserPasswordController";
 import { UserProfileController } from "@modules/accounts/useCases/userProfile/UserProfileController";
+import { MeController } from "@modules/accounts/useCases/me/MeController";
 
 const usersRoutes = Router();
 
@@ -22,15 +23,18 @@ const deleteUserController = new DeleteUserController();
 const updateUserAvatarController = new UpdateUserAvatarController();
 const resetUserPasswordController = new ResetUserPasswordController();
 const userProfileController = new UserProfileController();
+const meController = new MeController();
+
+usersRoutes.post("/", createUserController.handle);
 
 usersRoutes.get("/", ensureAuthenticated, listUsersController.handle);
+usersRoutes.get("/me", ensureAuthenticated, meController.handle);
+
 usersRoutes.get(
   "/profile/:id",
   ensureAuthenticated,
   userProfileController.handle
 );
-
-usersRoutes.post("/", createUserController.handle);
 
 usersRoutes.put("/:id", ensureAuthenticated, updateUserController.handle);
 usersRoutes.put(
