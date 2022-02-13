@@ -4,7 +4,7 @@ import { ResetUserPasswordUseCase } from "./ResetUserPasswordUseCase";
 
 class ResetUserPasswordController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params;
+    const { id } = request.user;
     const { oldPassword, password, confirmPassword } = request.body;
 
     const resetUserPasswordUseCase = container.resolve(
@@ -20,7 +20,7 @@ class ResetUserPasswordController {
 
     return response
       .status(200)
-      .send({ message: "Password reset successfully" });
+      .send({ message: "Password reset successfully!" });
   }
 }
 
