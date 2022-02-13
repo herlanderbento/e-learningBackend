@@ -14,7 +14,6 @@ interface IRequest {
   province: string;
   country: string;
   id: string;
-  updated_at: Date;
 }
 @injectable()
 class UpdateUserUseCase {
@@ -31,7 +30,6 @@ class UpdateUserUseCase {
     province,
     country,
     id,
-    updated_at = new Date(),
   }: IRequest): Promise<User> {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -63,7 +61,7 @@ class UpdateUserUseCase {
       city,
       province,
       country,
-      updated_at,
+      updated_at: new Date(),
     });
 
     await this.usersRepository.save(user);
