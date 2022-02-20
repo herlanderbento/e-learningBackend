@@ -27,7 +27,7 @@ const meController = new MeController();
 
 usersRoutes.post("/", createUserController.handle);
 
-usersRoutes.get("/", ensureAuthenticated, listUsersController.handle);
+usersRoutes.get("/", listUsersController.handle);
 usersRoutes.get("/me", ensureAuthenticated, meController.handle);
 
 usersRoutes.get(
@@ -37,18 +37,19 @@ usersRoutes.get(
 );
 
 usersRoutes.put("/:id", ensureAuthenticated, updateUserController.handle);
-usersRoutes.put(
-  "/resetPassword/:id",
+usersRoutes.patch(
+  "/resetPassword",
   ensureAuthenticated,
   resetUserPasswordController.handle
 );
-usersRoutes.delete("/:id", ensureAuthenticated, deleteUserController.handle);
 
 usersRoutes.patch(
-  "/:id",
+  "/avatar",
   ensureAuthenticated,
   uploadAvatar.single("avatar"),
   updateUserAvatarController.handle
 );
+
+usersRoutes.delete("/:id", ensureAuthenticated, deleteUserController.handle);
 
 export { usersRoutes };

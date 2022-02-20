@@ -35,7 +35,7 @@ class ResetUserPasswordUseCase {
     });
 
     if (!(await schema.isValid({ oldPassword, password, confirmPassword }))) {
-      throw new AppError("Validation fails2");
+      throw new AppError("Validation fails");
     }
 
     if (password === oldPassword) {

@@ -10,7 +10,7 @@ class DeleteUserController {
 
     await deleteUserUseCase.execute(id);
 
-    return response.status(200).json({ message: "user successfully deleted" });
+    return response.status(200).json({ message: "User successfully deleted" });
   }
 }
 export { DeleteUserController };

@@ -15,10 +15,12 @@ describe("List Categories", () => {
   it("Should be able to list all categories courses", async () => {
     const category = {
       name: "Category Test",
+      description: "Category description Test",
     };
-    const createCategory = await categoriesRepositoryInMemory.create(
-      category.name
-    );
+    const createCategory = await categoriesRepositoryInMemory.create({
+      name: category.name,
+      description: category.description,
+    });
 
     const categories = await listCategoriesUseCase.execute();
 
