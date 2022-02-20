@@ -2,12 +2,15 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { Exclude } from "class-transformer";
 
 import { v4 as uuidV4 } from "uuid";
+import { Course } from "@modules/courses/infra/typeorm/entities/Course";
 
 @Entity("users")
 class User {
@@ -47,6 +50,14 @@ class User {
 
   @Column()
   isAdmin: boolean;
+
+  @ManyToMany(() => Course)
+  @JoinTable({
+    name: "courses_users",
+    joinColumns: [{ name: "user_id" }],
+    inverseJoinColumns: [{ name: "course_id" }],
+  })
+  courses: Course[];
 
   @CreateDateColumn()
   created_at: Date;

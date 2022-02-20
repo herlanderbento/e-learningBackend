@@ -33,7 +33,14 @@ class CategoriesRepository implements ICategoriesRepository {
   }
 
   async findAll(): Promise<Category[]> {
-    return await this.repository.find();
+    const categoriesQuery = this.repository
+      .createQueryBuilder("C")
+      .leftJoinAndSelect("C.course", "courses")
+      .loadRelationCountAndMap("C.courseCounts", "C.course");
+
+    const category = await categoriesQuery.getMany();
+
+    return category;
   }
 
   async delete(id: string): Promise<void> {

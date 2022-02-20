@@ -1,3 +1,4 @@
+import { classToPlain } from "class-transformer";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { ListCoursesUseCase } from "./ListCoursesUseCase";
@@ -8,7 +9,7 @@ class ListCoursesController {
 
     const allCourses = await listCoursesUseCase.execute();
 
-    return response.json(allCourses);
+    return response.json(classToPlain(allCourses));
   }
 }
 

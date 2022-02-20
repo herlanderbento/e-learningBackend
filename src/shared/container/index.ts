@@ -6,6 +6,8 @@ import { CategoriesRepository } from "@modules/courses/infra/typeorm/repositorie
 import { ICategoriesRepository } from "@modules/courses/repositories/ICategoriesRepository";
 import { ICoursesRepository } from "@modules/courses/repositories/ICoursesRepository";
 import { CoursesRepository } from "@modules/courses/infra/typeorm/repositories/CoursesRepository";
+import { ICourseUsersRepository } from "@modules/courses/repositories/ICourseUsersRepository";
+import { CourseUsersRepository } from "@modules/courses/infra/typeorm/repositories/CourseUsersRepository";
 
 container.registerSingleton<ICategoriesRepository>(
   "CategoriesRepository",
@@ -20,4 +22,9 @@ container.registerSingleton<IUsersRepository>(
 container.registerSingleton<ICoursesRepository>(
   "CoursesRepository",
   CoursesRepository
+);
+
+container.registerSingleton<ICourseUsersRepository>(
+  "CourseUsersRepository",
+  CourseUsersRepository
 );

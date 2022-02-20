@@ -2,10 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
+import { Course } from "./Course";
 
 @Entity("categories")
 class Category {
@@ -20,6 +23,10 @@ class Category {
 
   @Column()
   image: string;
+
+  @OneToMany((type) => Course, (courses) => courses.category)
+  @JoinTable()
+  course: Course[];
 
   @CreateDateColumn()
   created_at: Date;

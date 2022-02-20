@@ -36,7 +36,15 @@ export class CoursesRepository implements ICoursesRepository {
   }
 
   async findAll(): Promise<Course[]> {
-    return await this.repository.find();
+    const courseQuery = this.repository
+      .createQueryBuilder("c")
+      .innerJoinAndSelect("c.category", "category")
+      .leftJoinAndSelect("c.users", "users")
+      .loadRelationCountAndMap("c.usersCounts", "c.users");
+
+    const course = await courseQuery.getMany();
+
+    return course;
   }
 
   async delete(id: string): Promise<void> {

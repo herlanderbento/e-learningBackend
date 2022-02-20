@@ -25,7 +25,10 @@ class UsersRepository implements IUsersRepository {
   }
 
   async findAllUsers(): Promise<User[]> {
-    return this.repository.find();
+    const usersQuery = this.repository.createQueryBuilder();
+    const user = await usersQuery.getMany();
+
+    return user;
   }
 
   async findByEmail(email: string): Promise<User> {
@@ -34,6 +37,21 @@ class UsersRepository implements IUsersRepository {
 
   async findByBI(bi: string): Promise<User> {
     const user = await this.repository.findOne({ bi });
+
+    return user;
+  }
+
+  async findByIdShowDetails(id: string): Promise<User[]> {
+    const userQuery = this.repository
+      .createQueryBuilder("u")
+      .where("u.id = :id", { id });
+
+    userQuery
+      .orWhere("user_id = :id", { id })
+      .leftJoinAndSelect("u.courses", "courses")
+      .loadRelationCountAndMap("u.coursesCounts", "u.courses");
+
+    const user = await userQuery.getMany();
 
     return user;
   }

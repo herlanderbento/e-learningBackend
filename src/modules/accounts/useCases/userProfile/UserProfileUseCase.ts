@@ -9,8 +9,8 @@ class UserProfileUseCase {
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute(id: string): Promise<User> {
-    const user = await this.usersRepository.findById(id);
+  async execute(id: string): Promise<User[]> {
+    const user = await this.usersRepository.findByIdShowDetails(id);
 
     return user;
   }
