@@ -18,6 +18,11 @@ app.use(
   "/files/avatar",
   express.static(resolve(__dirname, "../../../../", "tmp/avatar"))
 );
+app.use(
+  "/files/moduleImages",
+  express.static(resolve(__dirname, "../../../../", "tmp/moduleImages"))
+);
+
 app.use(router);
 
 app.get("/", (request, response) => {

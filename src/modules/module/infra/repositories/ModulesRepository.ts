@@ -14,6 +14,7 @@ class ModulesRepository implements IModulesRepository {
     name,
     description,
     duration,
+    image,
     course_id,
     id,
   }: ICreateModuleDtos): Promise<void> {
@@ -22,6 +23,7 @@ class ModulesRepository implements IModulesRepository {
       description,
       duration,
       course_id,
+      image,
       id,
     });
 
@@ -40,6 +42,10 @@ class ModulesRepository implements IModulesRepository {
     const all = await this.repository.find();
 
     return all;
+  }
+
+  async save(modules: Module): Promise<Module> {
+    return await this.repository.save(modules);
   }
 }
 

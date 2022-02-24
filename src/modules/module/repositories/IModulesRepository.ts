@@ -6,4 +6,5 @@ export interface IModulesRepository {
   findByName(name: string): Promise<Module>;
   findAll(): Promise<Module[]>;
   findById(id: string): Promise<Module>;
+  save(modules: Module): Promise<Module>;
 }

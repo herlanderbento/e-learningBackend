@@ -3,5 +3,6 @@ export interface ICreateModuleDtos {
   description: string;
   duration: number;
   course_id: string;
+  image?: string;
   id?: string;
 }
