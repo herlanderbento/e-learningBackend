@@ -25,7 +25,11 @@ class UsersRepository implements IUsersRepository {
   }
 
   async findAllUsers(): Promise<User[]> {
-    const usersQuery = this.repository.createQueryBuilder();
+    const usersQuery = this.repository
+      .createQueryBuilder("u")
+      // .leftJoinAndSelect("u.courses", "courses")
+      .loadRelationCountAndMap("u.totalOfCourses", "u.courses");
+
     const user = await usersQuery.getMany();
 
     return user;
