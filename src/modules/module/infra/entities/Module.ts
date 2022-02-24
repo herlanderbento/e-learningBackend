@@ -1,7 +1,10 @@
+import { Course } from "@modules/courses/infra/typeorm/entities/Course";
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -26,6 +29,10 @@ class Module {
 
   @Column()
   course_id: string;
+
+  @ManyToOne(() => Course)
+  @JoinColumn({ name: "course_id" })
+  Course: Course;
 
   @CreateDateColumn()
   created_at: Date;

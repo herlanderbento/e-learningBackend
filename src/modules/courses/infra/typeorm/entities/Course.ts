@@ -1,4 +1,5 @@
 import { User } from "@modules/accounts/infra/entities/User";
+import { Module } from "@modules/module/infra/entities/Module";
 import {
   Column,
   CreateDateColumn,
@@ -39,6 +40,10 @@ class Course {
     inverseJoinColumns: [{ name: "user_id" }],
   })
   users: User[];
+
+  @OneToMany((type) => Module, (Modules) => Modules.Course)
+  @JoinTable()
+  modules: Module[];
 
   @CreateDateColumn()
   created_at: string;

@@ -1,9 +1,8 @@
+import { inject, injectable } from "tsyringe";
 import { ICoursesRepository } from "@modules/courses/repositories/ICoursesRepository";
-import { Module } from "@modules/module/infra/entities/Module";
 import { IModulesRepository } from "@modules/module/repositories/IModulesRepository";
 import { AppError } from "@shared/errors/AppError";
 import { deleteFile } from "@utils/file";
-import { inject, injectable } from "tsyringe";
 
 import * as Yup from "yup";
 

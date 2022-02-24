@@ -39,8 +39,9 @@ export class CoursesRepository implements ICoursesRepository {
     const courseQuery = this.repository
       .createQueryBuilder("c")
       .innerJoinAndSelect("c.category", "category")
-      .leftJoinAndSelect("c.users", "users")
-      .loadRelationCountAndMap("c.usersCounts", "c.users");
+      .leftJoinAndSelect("c.modules", "modules")
+      .loadRelationCountAndMap("c.totalUsers", "c.users")
+      .loadRelationCountAndMap("c.totalModules", "c.modules");
 
     const course = await courseQuery.getMany();
 
