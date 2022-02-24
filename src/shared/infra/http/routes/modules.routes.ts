@@ -7,6 +7,7 @@ import { CreateModuleController } from "@modules/module/useCases/createModule/Cr
 import { ListModulesController } from "@modules/module/useCases/listModules/ListModulesController";
 import { UpdateModuleImageController } from "@modules/module/useCases/updateModuleImage/UpdateModuleImageController";
 import { UpdateModuleController } from "@modules/module/useCases/updateModule/UpdateModuleController";
+import { DeleteModuleController } from "@modules/module/useCases/deleteModule/DeleteModuleController";
 
 const modulesRoutes = Router();
 
@@ -16,6 +17,7 @@ const createModuleController = new CreateModuleController();
 const listModulesController = new ListModulesController();
 const updateModuleImageController = new UpdateModuleImageController();
 const updateModuleController = new UpdateModuleController();
+const deleteModuleController = new DeleteModuleController();
 
 modulesRoutes.get("/", listModulesController.handle);
 modulesRoutes.post(
@@ -31,5 +33,6 @@ modulesRoutes.patch(
 );
 
 modulesRoutes.put("/:id", updateModuleController.handle);
+modulesRoutes.delete("/:id", deleteModuleController.handle);
 
 export { modulesRoutes };

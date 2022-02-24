@@ -47,6 +47,10 @@ class ModulesRepository implements IModulesRepository {
   async save(modules: Module): Promise<Module> {
     return await this.repository.save(modules);
   }
+
+  async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
 }
 
 export { ModulesRepository };

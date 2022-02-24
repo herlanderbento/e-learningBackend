@@ -7,4 +7,5 @@ export interface IModulesRepository {
   findAll(): Promise<Module[]>;
   findById(id: string): Promise<Module>;
   save(modules: Module): Promise<Module>;
+  delete(id: string): Promise<void>;
 }
