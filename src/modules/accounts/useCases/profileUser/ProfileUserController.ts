@@ -1,18 +1,18 @@
 import { classToPlain } from "class-transformer";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { UserProfileUseCase } from "./UserProfileUseCase";
+import { ProfileUserUseCase } from "./ProfileUserUseCase";
 
-class UserProfileController {
+class ProfileUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const userProfileUseCase = container.resolve(UserProfileUseCase);
+    const profileUserUseCase = container.resolve(ProfileUserUseCase);
 
-    const user = await userProfileUseCase.execute(id);
+    const user = await profileUserUseCase.execute(id);
 
     return response.json(classToPlain(user));
   }
 }
 
-export { UserProfileController };
+export { ProfileUserController };

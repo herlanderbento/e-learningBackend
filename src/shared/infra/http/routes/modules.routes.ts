@@ -11,7 +11,7 @@ import { DeleteModuleController } from "@modules/module/useCases/deleteModule/De
 
 const modulesRoutes = Router();
 
-const uploadImages = multer(uploadConfig.upload("./tmp/moduleImages"));
+const uploadImages = multer(uploadConfig);
 
 const createModuleController = new CreateModuleController();
 const listModulesController = new ListModulesController();

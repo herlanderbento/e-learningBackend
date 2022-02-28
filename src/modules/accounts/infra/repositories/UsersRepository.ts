@@ -45,7 +45,7 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  async findByIdShowDetails(id: string): Promise<User[]> {
+  async findByIdShowDetails(id: string): Promise<User> {
     const userQuery = this.repository
       .createQueryBuilder("u")
       .where("u.id = :id", { id });
@@ -57,7 +57,7 @@ class UsersRepository implements IUsersRepository {
 
     const user = await userQuery.getMany();
 
-    return user;
+    return user as any;
   }
 
   async save(user: User): Promise<User> {

@@ -3,17 +3,17 @@ import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepositor
 import { inject, injectable } from "tsyringe";
 
 @injectable()
-class UserProfileUseCase {
+class ProfileUserUseCase {
   constructor(
     @inject("UsersRepository")
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute(id: string): Promise<User[]> {
+  async execute(id: string): Promise<User> {
     const user = await this.usersRepository.findByIdShowDetails(id);
 
     return user;
   }
 }
 
-export { UserProfileUseCase };
+export { ProfileUserUseCase };

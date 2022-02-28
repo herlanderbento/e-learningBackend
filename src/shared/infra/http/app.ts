@@ -6,6 +6,8 @@ import cors from "cors";
 
 import "@shared/container";
 import createConnection from "@shared/infra/typeorm";
+import upload from "@config/upload";
+
 import { AppError } from "@shared/errors/AppError";
 import { router } from "./routes";
 
@@ -14,14 +16,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(
-  "/files/avatar",
-  express.static(resolve(__dirname, "../../../../", "tmp/avatar"))
-);
-app.use(
-  "/files/moduleImages",
-  express.static(resolve(__dirname, "../../../../", "tmp/moduleImages"))
-);
+app.use("/avatar", express.static(resolve(`${upload.tmpFolder}/avatar`)));
+app.use("/module", express.static(resolve(`${upload.tmpFolder}/module`)));
 
 app.use(router);
 

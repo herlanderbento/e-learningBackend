@@ -5,6 +5,7 @@ import { AppError } from "@shared/errors/AppError";
 import { deleteFile } from "@utils/file";
 
 import * as Yup from "yup";
+import { IStorageProvider } from "@shared/container/providers/StorageProvider/IStorageProvider";
 
 interface IRequest {
   name: string;
@@ -20,7 +21,9 @@ class CreateModuleUseCase {
     @inject("ModulesRepository")
     private modulesRepository: IModulesRepository,
     @inject("CoursesRepository")
-    private coursesRepository: ICoursesRepository
+    private coursesRepository: ICoursesRepository,
+    @inject("StorageProvider")
+    private storageProvider: IStorageProvider
   ) {}
 
   async execute({
@@ -44,16 +47,18 @@ class CreateModuleUseCase {
     const course = await this.coursesRepository.findById(course_id);
 
     if (!course) {
-      await deleteFile(`./tmp/moduleImages/${image}`);
+      await this.storageProvider.save(image, "");
       throw new AppError("Course does not exists!");
     }
 
     const modules = await this.modulesRepository.findByName(name);
 
     if (modules) {
-      await deleteFile(`./tmp/moduleImages/${image}`);
+      await this.storageProvider.delete(image, "");
       throw new AppError("Modules already exists!");
     }
+
+    await this.storageProvider.save(image, "courses");
 
     await this.modulesRepository.create({
       name,
