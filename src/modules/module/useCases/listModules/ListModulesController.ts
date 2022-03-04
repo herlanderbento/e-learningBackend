@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
+import { classToPlain } from "class-transformer";
 import { ListModulesUseCase } from "./ListModulesUseCase";
 
 class ListModulesController {
@@ -8,7 +9,7 @@ class ListModulesController {
 
     const all = await listModulesUseCase.execute();
 
-    return response.json(all);
+    return response.json(classToPlain(all));
   }
 }
 

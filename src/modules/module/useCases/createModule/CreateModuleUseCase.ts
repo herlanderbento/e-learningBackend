@@ -58,7 +58,7 @@ class CreateModuleUseCase {
       throw new AppError("Modules already exists!");
     }
 
-    await this.storageProvider.save(image, "courses");
+    await this.storageProvider.save(image, "modules");
 
     await this.modulesRepository.create({
       name,
