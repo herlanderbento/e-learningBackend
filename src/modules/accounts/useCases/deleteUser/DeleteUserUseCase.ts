@@ -1,4 +1,5 @@
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { IStorageProvider } from "@shared/container/providers/StorageProvider/IStorageProvider";
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 
@@ -6,7 +7,9 @@ import { inject, injectable } from "tsyringe";
 class DeleteUserUseCase {
   constructor(
     @inject("UsersRepository")
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+    @inject("StorageProvider")
+    private storageProvider: IStorageProvider
   ) {}
 
   async execute(id: string): Promise<void> {
@@ -14,6 +17,10 @@ class DeleteUserUseCase {
 
     if (!user) {
       throw new AppError("User not found!");
+    }
+
+    if (user.avatar !== null) {
+      await this.storageProvider.delete(user.avatar, "avatar");
     }
 
     await this.usersRepository.delete(id);

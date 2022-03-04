@@ -67,7 +67,10 @@ class User {
 
   @Expose({ name: "avatar_url" })
   avatar_url(): string {
-    return `${process.env.APP_API_URL}/avatar/${this.avatar}`;
+    if (this.avatar !== null) {
+      return `${process.env.APP_API_URL}/avatar/${this.avatar}`;
+    }
+    return null;
   }
 
   constructor() {

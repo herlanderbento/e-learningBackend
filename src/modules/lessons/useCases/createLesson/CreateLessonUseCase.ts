@@ -1,11 +1,9 @@
-import { ICreateLessonDTO } from "@modules/lessons/dtos/ICreateLessonDTO";
 import { ILessonsRepository } from "@modules/lessons/repositories/ILessonsRepository";
+import { SchemeValidateCreated } from "@modules/lessons/validations/SchemeValidationsLessons";
 import { IModulesRepository } from "@modules/module/repositories/IModulesRepository";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/IStorageProvider";
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
-
-import * as Yup from "yup";
 
 interface IRequest {
   title: string;
@@ -25,15 +23,11 @@ class CreateLessonUseCase {
   ) {}
 
   async execute({ title, video, module_id }: IRequest): Promise<void> {
-    // const schema = Yup.object().shape({
-    //   title: Yup.string().required(),
-    //   video: Yup.string().required(),
-    //   module_id: Yup.string().required(),
-    // });
+    if (!(await SchemeValidateCreated.isValid({ title, video, module_id }))) {
+      await this.storageProvider.delete(video, "");
 
-    // if (!(await schema.isValid({ title, video, module_id }))) {
-    //   throw new AppError("Validation fails2");
-    // }
+      throw new AppError("Validation fails");
+    }
 
     const modules = await this.modulesRepository.findById(module_id);
 

@@ -17,6 +17,7 @@ class Lesson {
   @Column()
   title: string;
 
+  @Exclude()
   @Column()
   video: string;
 
@@ -28,6 +29,11 @@ class Lesson {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({ name: "video_url" })
+  video_url(): string {
+    return `${process.env.APP_API_URL}/lessons/${this.video}`;
+  }
 
   constructor() {
     if (!this.id) {
