@@ -1,6 +1,6 @@
 import { IModulesRepository } from "@modules/module/repositories/IModulesRepository";
+import { IStorageProvider } from "@shared/container/providers/StorageProvider/IStorageProvider";
 import { AppError } from "@shared/errors/AppError";
-import { deleteFile } from "@utils/file";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {
@@ -12,23 +12,29 @@ interface IRequest {
 class UpdateModuleImageUseCase {
   constructor(
     @inject("ModulesRepository")
-    private modulesRepository: IModulesRepository
+    private modulesRepository: IModulesRepository,
+    @inject("StorageProvider")
+    private storageProvider: IStorageProvider
   ) {}
 
   async execute({ id, image }: IRequest): Promise<void> {
-    const updateImage = await this.modulesRepository.findById(id);
+    const modules = await this.modulesRepository.findById(id);
 
-    if (!updateImage) {
+    if (!modules) {
+      await this.storageProvider.delete(image, "");
+
       throw new AppError("Module does not exists!");
     }
 
-    if (updateImage.image) {
-      await deleteFile(`./tmp/moduleImages/${updateImage.image}`);
+    if (modules.image) {
+      await this.storageProvider.delete(modules.image, "modules");
     }
 
-    updateImage.image = image;
+    modules.image = image;
 
-    await this.modulesRepository.save(updateImage);
+    await this.storageProvider.save(image, "modules");
+
+    await this.modulesRepository.save(modules);
   }
 }
 
