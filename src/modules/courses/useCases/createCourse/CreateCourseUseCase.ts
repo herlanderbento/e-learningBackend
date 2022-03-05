@@ -1,8 +1,7 @@
 import { ICoursesRepository } from "@modules/courses/repositories/ICoursesRepository";
+import { createCourseSchemeValidate } from "@modules/courses/validations";
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
-
-import * as Yup from "yup";
 
 interface IRequest {
   name: string;
@@ -24,12 +23,7 @@ class CreateCourseUseCase {
     category_id,
   }: // user_id,
   IRequest): Promise<void> {
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      category_id: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid({ name, category_id }))) {
+    if (!(await createCourseSchemeValidate.isValid({ name, category_id }))) {
       throw new AppError("Validation fails");
     }
 

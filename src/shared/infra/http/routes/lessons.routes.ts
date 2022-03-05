@@ -8,6 +8,7 @@ import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 import { ListLessonsController } from "@modules/lessons/useCases/listLessons/ListLessonsController";
 import { UpdateLessonController } from "@modules/lessons/useCases/updateLesson/UpdateLessonController";
 import { DeleteLessonController } from "@modules/lessons/useCases/deleteLesson/DeleteLessonController";
+import { UpdateVideoLessonController } from "@modules/lessons/useCases/updateVideoLesson/UpdateVideoLessonController";
 
 const lessonsRoutes = Router();
 
@@ -17,6 +18,7 @@ const createLessonController = new CreateLessonController();
 const listsLessonsController = new ListLessonsController();
 const updateLessonController = new UpdateLessonController();
 const deleteLessonController = new DeleteLessonController();
+const updateVideoLessonController = new UpdateVideoLessonController();
 
 lessonsRoutes.get("/", ensureAuthenticated, listsLessonsController.handle);
 lessonsRoutes.post(
@@ -31,6 +33,13 @@ lessonsRoutes.delete(
   "/:id",
   ensureAuthenticated,
   deleteLessonController.handle
+);
+
+lessonsRoutes.patch(
+  "/:id",
+  ensureAuthenticated,
+  uploadVideos.single("video"),
+  updateVideoLessonController.handle
 );
 
 export { lessonsRoutes };

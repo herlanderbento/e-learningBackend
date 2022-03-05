@@ -1,5 +1,5 @@
 import { ILessonsRepository } from "@modules/lessons/repositories/ILessonsRepository";
-import { SchemeValidateCreated } from "@modules/lessons/validations/SchemeValidationsLessons";
+import { createLessonSchemeValidate } from "@modules/lessons/validations";
 import { IModulesRepository } from "@modules/module/repositories/IModulesRepository";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/IStorageProvider";
 import { AppError } from "@shared/errors/AppError";
@@ -23,7 +23,9 @@ class CreateLessonUseCase {
   ) {}
 
   async execute({ title, video, module_id }: IRequest): Promise<void> {
-    if (!(await SchemeValidateCreated.isValid({ title, video, module_id }))) {
+    if (
+      !(await createLessonSchemeValidate.isValid({ title, video, module_id }))
+    ) {
       await this.storageProvider.delete(video, "");
 
       throw new AppError("Validation fails");

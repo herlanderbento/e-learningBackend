@@ -1,8 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { ICategoriesRepository } from "@modules/courses/repositories/ICategoriesRepository";
 import { AppError } from "@shared/errors/AppError";
-
-import * as Yup from "yup";
+import { createCategorySchemeValidate } from "@modules/courses/validations";
 
 interface IRequest {
   name: string;
@@ -17,12 +16,7 @@ class CreateCategoryUseCase {
   ) {}
 
   async execute({ name, description }: IRequest): Promise<void> {
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      // description: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid({ name, description }))) {
+    if (!(await createCategorySchemeValidate.isValid({ name }))) {
       throw new AppError("Validation fails");
     }
 

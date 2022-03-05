@@ -1,4 +1,5 @@
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { resetPasswordSchemeValidate } from "@modules/accounts/validations";
 import { AppError } from "@shared/errors/AppError";
 import { compare, hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
@@ -24,17 +25,13 @@ class ResetUserPasswordUseCase {
     password,
     confirmPassword,
   }: IRequest): Promise<void> {
-    const schema = Yup.object().shape({
-      oldPassword: Yup.string().min(6).required(),
-      password: Yup.string().min(6).required(),
-      confirmPassword: Yup.string().when(
-        "password",
-        (password: string, field: any) =>
-          password ? field.required().oneOf([Yup.ref("password")]) : field
-      ),
-    });
-
-    if (!(await schema.isValid({ oldPassword, password, confirmPassword }))) {
+    if (
+      !(await resetPasswordSchemeValidate.isValid({
+        oldPassword,
+        password,
+        confirmPassword,
+      }))
+    ) {
       throw new AppError("Validation fails");
     }
 

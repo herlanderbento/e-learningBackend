@@ -2,10 +2,9 @@ import { inject, injectable } from "tsyringe";
 import { ICoursesRepository } from "@modules/courses/repositories/ICoursesRepository";
 import { IModulesRepository } from "@modules/module/repositories/IModulesRepository";
 import { AppError } from "@shared/errors/AppError";
-import { deleteFile } from "@utils/file";
 
-import * as Yup from "yup";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/IStorageProvider";
+import { createModuleSchemeValidate } from "@modules/module/validations";
 
 interface IRequest {
   name: string;
@@ -33,14 +32,14 @@ class CreateModuleUseCase {
     image,
     course_id,
   }: IRequest): Promise<void> {
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      duration: Yup.string().required(),
-      image: Yup.string().required(),
-      course_id: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid({ name, course_id, duration, image }))) {
+    if (
+      !(await createModuleSchemeValidate.isValid({
+        name,
+        course_id,
+        duration,
+        image,
+      }))
+    ) {
       throw new AppError("Validation fails");
     }
 

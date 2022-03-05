@@ -1,6 +1,6 @@
 import { Lesson } from "@modules/lessons/infra/entities/Lesson";
 import { ILessonsRepository } from "@modules/lessons/repositories/ILessonsRepository";
-import { SchemeValidateUpdated } from "@modules/lessons/validations/SchemeValidationsLessons";
+import { updateLessonSchemeValidate } from "@modules/lessons/validations";
 import { IModulesRepository } from "@modules/module/repositories/IModulesRepository";
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
@@ -20,7 +20,7 @@ class UpdateLessonUseCase {
   ) {}
 
   async execute({ id, title, module_id }: IRequest): Promise<Lesson> {
-    if (!(await SchemeValidateUpdated.isValid({ title, module_id }))) {
+    if (!(await updateLessonSchemeValidate.isValid({ title, module_id }))) {
       throw new AppError("Validation fails");
     }
 

@@ -1,10 +1,9 @@
 import { ICreateCategoriesDtos } from "@modules/courses/dtos/ICreateCategoriesDtos";
 import { Category } from "@modules/courses/infra/typeorm/entities/Category";
 import { ICategoriesRepository } from "@modules/courses/repositories/ICategoriesRepository";
+import { createCategorySchemeValidate } from "@modules/courses/validations";
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
-
-import * as Yup from "yup";
 
 @injectable()
 class UpdateCategoryUseCase {
@@ -18,11 +17,7 @@ class UpdateCategoryUseCase {
     name,
     description,
   }: ICreateCategoriesDtos): Promise<Category> {
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid({ name }))) {
+    if (!(await createCategorySchemeValidate.isValid({ name }))) {
       throw new AppError("Validation fails");
     }
 

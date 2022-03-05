@@ -5,6 +5,7 @@ import { Module } from "@modules/module/infra/entities/Module";
 import * as Yup from "yup";
 import { AppError } from "@shared/errors/AppError";
 import { ICoursesRepository } from "@modules/courses/repositories/ICoursesRepository";
+import { updateModuleSchemeValidate } from "@modules/module/validations";
 
 interface IRequest {
   id: string;
@@ -31,13 +32,9 @@ class UpdateModuleUseCase {
     duration,
     course_id,
   }: IRequest): Promise<Module> {
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      duration: Yup.string().required(),
-      course_id: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid({ name, course_id, duration }))) {
+    if (
+      !(await updateModuleSchemeValidate.isValid({ name, course_id, duration }))
+    ) {
       throw new AppError("Validation fails");
     }
 

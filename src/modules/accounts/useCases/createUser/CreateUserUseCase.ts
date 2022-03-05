@@ -2,8 +2,8 @@ import { inject, injectable } from "tsyringe";
 import { ICreateUsersDto } from "@modules/accounts/dtos/ICreateUsersDto";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
-import * as Yup from "yup";
 import { hash } from "bcrypt";
+import { createUserSchemeValidate } from "@modules/accounts/validations";
 
 @injectable()
 class CreateUserUseCase {
@@ -13,13 +13,7 @@ class CreateUserUseCase {
   ) {}
 
   async execute({ name, email, password }: ICreateUsersDto): Promise<void> {
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      email: Yup.string().email().required(),
-      password: Yup.string().min(6).required(),
-    });
-
-    if (!(await schema.isValid({ name, email, password }))) {
+    if (!(await createUserSchemeValidate.isValid({ name, email, password }))) {
       throw new AppError("Validation fails");
     }
 

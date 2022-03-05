@@ -1,9 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import * as Yup from "yup";
-
 import { User } from "@modules/accounts/infra/entities/User";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
+import { updateUserSchemeValidate } from "@modules/accounts/validations";
 
 interface IRequest {
   name: string;
@@ -31,11 +30,7 @@ class UpdateUserUseCase {
     country,
     id,
   }: IRequest): Promise<User> {
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid({ name }))) {
+    if (!(await updateUserSchemeValidate.isValid({ name }))) {
       throw new AppError("Validation fails");
     }
 

@@ -2,9 +2,8 @@ import { inject, injectable } from "tsyringe";
 import { ICreateCourseDtos } from "@modules/courses/dtos/ICreateCourseDtos";
 import { Course } from "@modules/courses/infra/typeorm/entities/Course";
 import { ICoursesRepository } from "@modules/courses/repositories/ICoursesRepository";
-
-import * as Yup from "yup";
 import { AppError } from "@shared/errors/AppError";
+import { createCourseSchemeValidate } from "@modules/courses/validations";
 
 @injectable()
 class UpdateCourseUseCase {
@@ -19,12 +18,7 @@ class UpdateCourseUseCase {
     description,
     category_id,
   }: ICreateCourseDtos): Promise<Course> {
-    const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      category_id: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid({ name, category_id }))) {
+    if (!(await createCourseSchemeValidate.isValid({ name, category_id }))) {
       throw new AppError("Validation fails");
     }
 

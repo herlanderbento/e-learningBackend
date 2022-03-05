@@ -11,11 +11,12 @@ class DeleteLessonUseCase {
     @inject("StorageProvider")
     private storageProvider: IStorageProvider
   ) {}
+
   async execute(id: string): Promise<void> {
     const lesson = await this.lessonsRepository.findById(id);
 
     if (!lesson) {
-      throw new AppError("Lesson not found!");
+      throw new AppError("Lesson not found");
     }
 
     await this.storageProvider.delete(lesson.video, "lessons");

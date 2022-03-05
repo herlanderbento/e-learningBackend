@@ -1,11 +1,11 @@
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
-import * as Yup from "yup";
 
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
 import auth from "@config/auth";
+import { authenticateUserSchemaValidate } from "@modules/accounts/validations";
 
 interface IRequest {
   email: string;
@@ -28,12 +28,7 @@ class AuthenticateUserUseCase {
   ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
-    const schema = Yup.object().shape({
-      email: Yup.string().email().required(),
-      password: Yup.string().required(),
-    });
-
-    if (!(await schema.isValid({ email, password }))) {
+    if (!(await authenticateUserSchemaValidate.isValid({ email, password }))) {
       throw new AppError("Validation fails");
     }
 
