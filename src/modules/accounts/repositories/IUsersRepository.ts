@@ -7,6 +7,7 @@ interface IUsersRepository {
   findAllUsers(): Promise<User[]>;
   findById(id: string): Promise<User>;
   findByBI(bi: string): Promise<User>;
+  findByName(name: string): Promise<User[]>;
   findByIdShowDetails(id: string): Promise<User>;
   save(user: User): Promise<User>;
   delete(id: string): Promise<void>;

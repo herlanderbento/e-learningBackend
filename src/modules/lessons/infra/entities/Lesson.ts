@@ -32,7 +32,7 @@ class Lesson {
 
   @Expose({ name: "video_url" })
   video_url(): string {
-    return `${process.env.APP_API_URL}/lessons/${this.video}`;
+    return `${process.env.NODE_ENV_API_URL}/lessons/${this.video}`;
   }
 
   constructor() {

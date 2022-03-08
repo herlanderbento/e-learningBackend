@@ -1,10 +1,14 @@
 import "reflect-metadata";
 import "express-async-errors";
+import "dotenv/config";
+
 import express, { Request, Response, NextFunction } from "express";
 import { resolve } from "path";
 import cors from "cors";
 
 import "@shared/container";
+import "@config/env";
+
 import createConnection from "@shared/infra/typeorm";
 import upload from "@config/upload";
 

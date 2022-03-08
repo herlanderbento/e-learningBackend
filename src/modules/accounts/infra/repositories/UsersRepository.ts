@@ -1,6 +1,6 @@
 import { ICreateUsersDto } from "@modules/accounts/dtos/ICreateUsersDto";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
-import { getRepository, Repository } from "typeorm";
+import { getRepository, Like, Repository } from "typeorm";
 import { User } from "../entities/User";
 
 class UsersRepository implements IUsersRepository {
@@ -41,6 +41,14 @@ class UsersRepository implements IUsersRepository {
 
   async findByBI(bi: string): Promise<User> {
     const user = await this.repository.findOne({ bi });
+
+    return user;
+  }
+
+  async findByName(name: string): Promise<User[]> {
+    const user = this.repository.find({
+      name: Like(`%${name}%`),
+    });
 
     return user;
   }

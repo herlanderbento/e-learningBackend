@@ -44,7 +44,7 @@ class Module {
 
   @Expose({ name: "image_url" })
   image_url(): string {
-    return `${process.env.APP_API_URL}/modules/${this.image}`;
+    return `${process.env.NODE_ENV_API_URL}/modules/${this.image}`;
   }
 
   constructor() {

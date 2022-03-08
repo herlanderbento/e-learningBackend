@@ -11,6 +11,7 @@ import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthen
 import { ResetUserPasswordController } from "@modules/accounts/useCases/resetUserPassword/ResetUserPasswordController";
 import { MeController } from "@modules/accounts/useCases/me/MeController";
 import { ProfileUserController } from "@modules/accounts/useCases/profileUser/ProfileUserController";
+import { SearchUserController } from "@modules/accounts/useCases/searchUser/SearchUserController";
 
 const usersRoutes = Router();
 
@@ -24,6 +25,7 @@ const updateUserAvatarController = new UpdateUserAvatarController();
 const resetUserPasswordController = new ResetUserPasswordController();
 const profileUserController = new ProfileUserController();
 const meController = new MeController();
+const searchUserController = new SearchUserController();
 
 usersRoutes.post("/", createUserController.handle);
 
@@ -35,6 +37,8 @@ usersRoutes.get(
   ensureAuthenticated,
   profileUserController.handle
 );
+
+usersRoutes.get("/search", searchUserController.handle);
 
 usersRoutes.put("/:id", ensureAuthenticated, updateUserController.handle);
 usersRoutes.patch(

@@ -41,10 +41,10 @@ class User {
   @Column()
   country: string;
 
-  @Exclude()
-  @Column()
+  @Column({ select: false })
   password: string;
 
+  @Exclude()
   @Column()
   avatar: string;
 
@@ -68,7 +68,7 @@ class User {
   @Expose({ name: "avatar_url" })
   avatar_url(): string {
     if (this.avatar !== null) {
-      return `${process.env.APP_API_URL}/avatar/${this.avatar}`;
+      return `${process.env.NODE_ENV_API_URL}/avatar/${this.avatar}`;
     }
     return null;
   }
