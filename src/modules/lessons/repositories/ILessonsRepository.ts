@@ -6,6 +6,7 @@ interface ILessonsRepository {
   findByTitle(title: string): Promise<Lesson>;
   findById(id: string): Promise<Lesson>;
   findAll(): Promise<Lesson[]>;
+  findAllPaginated(page: number): Promise<[Lesson[], number]>;
   delete(id: string): Promise<void>;
 }
 

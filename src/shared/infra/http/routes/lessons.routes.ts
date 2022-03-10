@@ -9,6 +9,7 @@ import { ListLessonsController } from "@modules/lessons/useCases/listLessons/Lis
 import { UpdateLessonController } from "@modules/lessons/useCases/updateLesson/UpdateLessonController";
 import { DeleteLessonController } from "@modules/lessons/useCases/deleteLesson/DeleteLessonController";
 import { UpdateVideoLessonController } from "@modules/lessons/useCases/updateVideoLesson/UpdateVideoLessonController";
+import { PaginatedLessonController } from "@modules/lessons/useCases/paginatedLesson/PaginatedLessonController";
 
 const lessonsRoutes = Router();
 
@@ -19,8 +20,10 @@ const listsLessonsController = new ListLessonsController();
 const updateLessonController = new UpdateLessonController();
 const deleteLessonController = new DeleteLessonController();
 const updateVideoLessonController = new UpdateVideoLessonController();
+const paginatedLessonController = new PaginatedLessonController();
 
 lessonsRoutes.get("/", ensureAuthenticated, listsLessonsController.handle);
+lessonsRoutes.get("/paginated", paginatedLessonController.handle);
 lessonsRoutes.post(
   "/",
   ensureAuthenticated,

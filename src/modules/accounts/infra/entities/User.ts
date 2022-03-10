@@ -41,7 +41,8 @@ class User {
   @Column()
   country: string;
 
-  @Column({ select: false })
+  @Exclude()
+  @Column()
   password: string;
 
   @Exclude()

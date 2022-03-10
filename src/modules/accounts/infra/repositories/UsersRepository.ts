@@ -53,6 +53,13 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
+  async findAllPaginated(page: number): Promise<[User[], number]> {
+    return await this.repository.findAndCount({
+      skip: page,
+      take: 10,
+    });
+  }
+
   async findByIdShowDetails(id: string): Promise<User> {
     const userQuery = this.repository
       .createQueryBuilder("u")

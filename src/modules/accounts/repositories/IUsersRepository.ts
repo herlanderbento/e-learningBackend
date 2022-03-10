@@ -9,6 +9,7 @@ interface IUsersRepository {
   findByBI(bi: string): Promise<User>;
   findByName(name: string): Promise<User[]>;
   findByIdShowDetails(id: string): Promise<User>;
+  findAllPaginated(page: number): Promise<[User[], number]>;
   save(user: User): Promise<User>;
   delete(id: string): Promise<void>;
 }

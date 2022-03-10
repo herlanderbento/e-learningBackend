@@ -12,6 +12,7 @@ import { ResetUserPasswordController } from "@modules/accounts/useCases/resetUse
 import { MeController } from "@modules/accounts/useCases/me/MeController";
 import { ProfileUserController } from "@modules/accounts/useCases/profileUser/ProfileUserController";
 import { SearchUserController } from "@modules/accounts/useCases/searchUser/SearchUserController";
+import { PaginatedUserController } from "@modules/accounts/useCases/paginatedUser/PaginatedUserController";
 
 const usersRoutes = Router();
 
@@ -26,19 +27,19 @@ const resetUserPasswordController = new ResetUserPasswordController();
 const profileUserController = new ProfileUserController();
 const meController = new MeController();
 const searchUserController = new SearchUserController();
-
-usersRoutes.post("/", createUserController.handle);
+const paginatedUserController = new PaginatedUserController();
 
 usersRoutes.get("/", listUsersController.handle);
+usersRoutes.get("/search", searchUserController.handle);
+usersRoutes.get("/paginated", paginatedUserController.handle);
 usersRoutes.get("/me", ensureAuthenticated, meController.handle);
-
 usersRoutes.get(
   "/profile/:id",
   ensureAuthenticated,
   profileUserController.handle
 );
 
-usersRoutes.get("/search", searchUserController.handle);
+usersRoutes.post("/", createUserController.handle);
 
 usersRoutes.put("/:id", ensureAuthenticated, updateUserController.handle);
 usersRoutes.patch(

@@ -26,6 +26,15 @@ class LessonsRepository implements ILessonsRepository {
     await this.repository.save(lesson);
   }
 
+  async findAllPaginated(page: number): Promise<[Lesson[], number]> {
+    const lessons = await this.repository.findAndCount({
+      skip: page,
+      take: 10,
+    });
+
+    return lessons;
+  }
+
   async findByTitle(title: string): Promise<Lesson> {
     return await this.repository.findOne({ title });
   }
