@@ -14,6 +14,8 @@ import { IModulesRepository } from "@modules/module/repositories/IModulesReposit
 import { ModulesRepository } from "@modules/module/infra/repositories/ModulesRepository";
 import { ILessonsRepository } from "@modules/lessons/repositories/ILessonsRepository";
 import { LessonsRepository } from "@modules/lessons/infra/repositories/LessonsRepository";
+import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
+import { UsersTokensRepository } from "@modules/accounts/infra/repositories/UsersTokensRepository";
 
 container.registerSingleton<ICategoriesRepository>(
   "CategoriesRepository",
@@ -43,4 +45,9 @@ container.registerSingleton<IModulesRepository>(
 container.registerSingleton<ILessonsRepository>(
   "LessonsRepository",
   LessonsRepository
+);
+
+container.registerSingleton<IUsersTokensRepository>(
+  "UsersTokensRepository",
+  UsersTokensRepository
 );

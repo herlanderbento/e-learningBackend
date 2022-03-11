@@ -4,8 +4,6 @@ import { AppError } from "@shared/errors/AppError";
 import { compare, hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
 
-import * as Yup from "yup";
-
 interface IRequest {
   id: string;
   oldPassword: string;
@@ -13,7 +11,7 @@ interface IRequest {
   confirmPassword: string;
 }
 @injectable()
-class ResetUserPasswordUseCase {
+class ChangePasswordUserUseCase {
   constructor(
     @inject("UsersRepository")
     private usersRepository: IUsersRepository
@@ -60,4 +58,4 @@ class ResetUserPasswordUseCase {
   }
 }
 
-export { ResetUserPasswordUseCase };
+export { ChangePasswordUserUseCase };

@@ -8,11 +8,12 @@ import { ListUsersController } from "@modules/accounts/useCases/listUsers/ListUs
 import { UpdateUserController } from "@modules/accounts/useCases/updateUser/UpdateUserController";
 import { UpdateUserAvatarController } from "@modules/accounts/useCases/updateUserAvatar/UpdateUserAvatarController";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
-import { ResetUserPasswordController } from "@modules/accounts/useCases/resetUserPassword/ResetUserPasswordController";
+
 import { MeController } from "@modules/accounts/useCases/me/MeController";
 import { ProfileUserController } from "@modules/accounts/useCases/profileUser/ProfileUserController";
 import { SearchUserController } from "@modules/accounts/useCases/searchUser/SearchUserController";
 import { PaginatedUserController } from "@modules/accounts/useCases/paginatedUser/PaginatedUserController";
+import { ChangePasswordUserController } from "@modules/accounts/useCases/changePasswordUser/ChangePasswordUserController";
 
 const usersRoutes = Router();
 
@@ -23,7 +24,7 @@ const listUsersController = new ListUsersController();
 const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
 const updateUserAvatarController = new UpdateUserAvatarController();
-const resetUserPasswordController = new ResetUserPasswordController();
+const changePasswordUserController = new ChangePasswordUserController();
 const profileUserController = new ProfileUserController();
 const meController = new MeController();
 const searchUserController = new SearchUserController();
@@ -43,9 +44,9 @@ usersRoutes.post("/", createUserController.handle);
 
 usersRoutes.put("/:id", ensureAuthenticated, updateUserController.handle);
 usersRoutes.patch(
-  "/resetPassword",
+  "/changePassword",
   ensureAuthenticated,
-  resetUserPasswordController.handle
+  changePasswordUserController.handle
 );
 
 usersRoutes.patch(
