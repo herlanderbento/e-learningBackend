@@ -13,7 +13,7 @@ class DeleteCourseUseCase {
     const category = await this.coursesRepository.findById(id);
 
     if (!category) {
-      throw new AppError("Course not found!");
+      throw new AppError("Course not found!", 404);
     }
 
     await this.coursesRepository.delete(id);

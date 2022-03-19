@@ -8,7 +8,7 @@ class ListCategoriesController {
 
     const categories = await listCategoriesUseCase.execute();
 
-    return response.json(categories);
+    return response.status(200).json(categories);
   }
 }
 

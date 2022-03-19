@@ -20,7 +20,7 @@ class ChangePasswordUserController {
 
     return response
       .status(200)
-      .send({ message: "Password reset successfully!" });
+      .send({ message: "Change password successfully!" });
   }
 }
 

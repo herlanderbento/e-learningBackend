@@ -55,7 +55,7 @@ class ResetPasswordUserUseCase {
 
     user.password = await hash(password, 8);
 
-    await this.usersRepository.create(user);
+    await this.usersRepository.save(user);
 
     await this.usersTokensRepository.deleteById(userToken.id);
   }

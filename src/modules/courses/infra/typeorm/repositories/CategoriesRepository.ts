@@ -41,6 +41,8 @@ class CategoriesRepository implements ICategoriesRepository {
     const category = await categoriesQuery.getMany();
 
     return category;
+
+    // return await this.repository.find();
   }
 
   async delete(id: string): Promise<void> {

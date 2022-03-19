@@ -4,12 +4,15 @@ import { Course } from "@modules/courses/infra/typeorm/entities/Course";
 import { ICoursesRepository } from "@modules/courses/repositories/ICoursesRepository";
 import { AppError } from "@shared/errors/AppError";
 import { createCourseSchemeValidate } from "@modules/courses/validations";
+import { ICategoriesRepository } from "@modules/courses/repositories/ICategoriesRepository";
 
 @injectable()
 class UpdateCourseUseCase {
   constructor(
     @inject("CoursesRepository")
-    private coursesRepository: ICoursesRepository
+    private coursesRepository: ICoursesRepository,
+    @inject("CategoriesRepository")
+    private categoriesRepository: ICategoriesRepository
   ) {}
 
   async execute({
@@ -20,6 +23,12 @@ class UpdateCourseUseCase {
   }: ICreateCourseDtos): Promise<Course> {
     if (!(await createCourseSchemeValidate.isValid({ name, category_id }))) {
       throw new AppError("Validation fails");
+    }
+
+    const category = await this.categoriesRepository.findById(category_id);
+
+    if (!category) {
+      throw new AppError("Category does not exists!", 404);
     }
 
     const course = await this.coursesRepository.findById(id);

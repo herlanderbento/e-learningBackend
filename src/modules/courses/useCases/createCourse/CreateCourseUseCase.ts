@@ -1,3 +1,4 @@
+import { ICategoriesRepository } from "@modules/courses/repositories/ICategoriesRepository";
 import { ICoursesRepository } from "@modules/courses/repositories/ICoursesRepository";
 import { createCourseSchemeValidate } from "@modules/courses/validations";
 import { AppError } from "@shared/errors/AppError";
@@ -14,7 +15,9 @@ interface IRequest {
 class CreateCourseUseCase {
   constructor(
     @inject("CoursesRepository")
-    private coursesRepository: ICoursesRepository
+    private coursesRepository: ICoursesRepository,
+    @inject("CategoriesRepository")
+    private categoriesRepository: ICategoriesRepository
   ) {}
 
   async execute({
@@ -25,6 +28,12 @@ class CreateCourseUseCase {
   IRequest): Promise<void> {
     if (!(await createCourseSchemeValidate.isValid({ name, category_id }))) {
       throw new AppError("Validation fails");
+    }
+
+    const category = await this.categoriesRepository.findById(category_id);
+
+    if (!category) {
+      throw new AppError("Category does not exists!", 404);
     }
 
     const course = await this.coursesRepository.findByName(name);

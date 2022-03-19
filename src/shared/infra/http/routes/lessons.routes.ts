@@ -22,27 +22,22 @@ const deleteLessonController = new DeleteLessonController();
 const updateVideoLessonController = new UpdateVideoLessonController();
 const paginatedLessonController = new PaginatedLessonController();
 
-lessonsRoutes.get("/", ensureAuthenticated, listsLessonsController.handle);
+//lessonsRoutes.use(ensureAuthenticated);
+
+lessonsRoutes.get("/", listsLessonsController.handle);
 lessonsRoutes.get("/paginated", paginatedLessonController.handle);
 lessonsRoutes.post(
   "/",
-  ensureAuthenticated,
   uploadVideos.single("video"),
   createLessonController.handle
 );
 
-lessonsRoutes.put("/:id", ensureAuthenticated, updateLessonController.handle);
-lessonsRoutes.delete(
-  "/:id",
-  ensureAuthenticated,
-  deleteLessonController.handle
-);
-
+lessonsRoutes.put("/:id", updateLessonController.handle);
 lessonsRoutes.patch(
   "/:id",
-  ensureAuthenticated,
   uploadVideos.single("video"),
   updateVideoLessonController.handle
 );
+lessonsRoutes.delete("/:id", deleteLessonController.handle);
 
 export { lessonsRoutes };

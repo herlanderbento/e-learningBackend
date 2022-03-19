@@ -14,7 +14,9 @@ class CreateCourseController {
       category_id,
     });
 
-    return response.status(201).send();
+    return response
+      .status(201)
+      .send({ message: "Course created successfully" });
   }
 }
 
