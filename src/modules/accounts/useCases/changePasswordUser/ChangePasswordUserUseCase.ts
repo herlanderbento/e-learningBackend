@@ -1,5 +1,5 @@
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
-import { resetPasswordSchemeValidate } from "@modules/accounts/validations";
+import { changePasswordSchemeValidate } from "@modules/accounts/validations";
 import { AppError } from "@shared/errors/AppError";
 import { compare, hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
@@ -24,7 +24,7 @@ class ChangePasswordUserUseCase {
     confirmPassword,
   }: IRequest): Promise<void> {
     if (
-      !(await resetPasswordSchemeValidate.isValid({
+      !(await changePasswordSchemeValidate.isValid({
         oldPassword,
         password,
         confirmPassword,

@@ -13,8 +13,17 @@ export const updateUserSchemeValidate = Yup.object().shape({
 });
 
 // Create Reset Users
-export const resetPasswordSchemeValidate = Yup.object().shape({
+export const changePasswordSchemeValidate = Yup.object().shape({
   oldPassword: Yup.string().min(6).required(),
+  password: Yup.string().min(6).required(),
+  confirmPassword: Yup.string().when(
+    "password",
+    (password: string, field: any) =>
+      password ? field.required().oneOf([Yup.ref("password")]) : field
+  ),
+});
+
+export const resetPasswordSchemeValidate = Yup.object().shape({
   password: Yup.string().min(6).required(),
   confirmPassword: Yup.string().when(
     "password",
