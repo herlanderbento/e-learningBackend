@@ -18,14 +18,14 @@ class CreateCourseUseCase {
     private coursesRepository: ICoursesRepository,
     @inject("CategoriesRepository")
     private categoriesRepository: ICategoriesRepository
-  ) {}
+  ) { }
 
   async execute({
     name,
     description,
     category_id,
   }: // user_id,
-  IRequest): Promise<void> {
+    IRequest): Promise<void> {
     if (!(await createCourseSchemeValidate.isValid({ name, category_id }))) {
       throw new AppError("Validation fails");
     }

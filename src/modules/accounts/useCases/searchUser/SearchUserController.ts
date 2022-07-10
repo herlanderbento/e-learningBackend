@@ -4,11 +4,11 @@ import { SearchUserUseCase } from "./SearchUserUseCase";
 
 class SearchUserController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name } = request.query;
+    const { search } = request.query;
 
     const searchUserUseCase = container.resolve(SearchUserUseCase);
 
-    const user = await searchUserUseCase.execute(String(name) || null);
+    const user = await searchUserUseCase.execute(String(search) || null);
 
     return response.status(200).json(user);
   }

@@ -14,6 +14,7 @@ import { ProfileUserController } from "@modules/accounts/useCases/profileUser/Pr
 import { SearchUserController } from "@modules/accounts/useCases/searchUser/SearchUserController";
 import { PaginatedUserController } from "@modules/accounts/useCases/paginatedUser/PaginatedUserController";
 import { ChangePasswordUserController } from "@modules/accounts/useCases/changePasswordUser/ChangePasswordUserController";
+import { ensureAdmin } from "../middlewares/ensureAdmin";
 
 const usersRoutes = Router();
 
@@ -30,13 +31,14 @@ const meController = new MeController();
 const searchUserController = new SearchUserController();
 const paginatedUserController = new PaginatedUserController();
 
-usersRoutes.get("/", listUsersController.handle);
-usersRoutes.get("/search", searchUserController.handle);
-usersRoutes.get("/paginated", paginatedUserController.handle);
+usersRoutes.get("/", ensureAdmin, listUsersController.handle);
+usersRoutes.get("/search", ensureAdmin, searchUserController.handle);
+usersRoutes.get("/paginated", ensureAdmin, paginatedUserController.handle);
 usersRoutes.get("/me", ensureAuthenticated, meController.handle);
 usersRoutes.get(
   "/profile/:id",
   ensureAuthenticated,
+  ensureAdmin,
   profileUserController.handle
 );
 
@@ -44,7 +46,7 @@ usersRoutes.post("/", createUserController.handle);
 
 usersRoutes.put("/:id", ensureAuthenticated, updateUserController.handle);
 usersRoutes.patch(
-  "/changePassword",
+  "/passwordChange",
   ensureAuthenticated,
   changePasswordUserController.handle
 );
@@ -56,6 +58,11 @@ usersRoutes.patch(
   updateUserAvatarController.handle
 );
 
-usersRoutes.delete("/:id", ensureAuthenticated, deleteUserController.handle);
+usersRoutes.delete(
+  "/:id",
+  ensureAuthenticated,
+  ensureAdmin,
+  deleteUserController.handle
+);
 
 export { usersRoutes };

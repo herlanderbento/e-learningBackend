@@ -1,7 +1,8 @@
+import { inject, injectable } from "tsyringe";
+
 import { ILessonsRepository } from "@modules/lessons/repositories/ILessonsRepository";
 import { IStorageProvider } from "@shared/container/providers/StorageProvider/IStorageProvider";
 import { AppError } from "@shared/errors/AppError";
-import { inject, injectable } from "tsyringe";
 
 @injectable()
 class DeleteLessonUseCase {

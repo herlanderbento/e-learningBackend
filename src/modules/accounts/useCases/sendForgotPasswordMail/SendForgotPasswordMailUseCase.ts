@@ -33,7 +33,7 @@ class SendForgotPasswordMailUseCase {
     );
 
     if (!user) {
-      throw new AppError("User does not exists!");
+      throw new AppError("User does not exists!", 404);
     }
 
     const token = uuidV4();
@@ -52,7 +52,7 @@ class SendForgotPasswordMailUseCase {
     };
 
     await this.mailProvider.sendMail(
-      email,
+      email, 
       "Recuperação de senha",
       variables,
       templatePath

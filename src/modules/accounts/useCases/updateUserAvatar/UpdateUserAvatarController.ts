@@ -12,7 +12,7 @@ class UpdateUserAvatarController {
 
     await updateUserAvatarUseCase.execute({ user_id: id, avatar_file });
 
-    return response.status(200).send();
+    return response.status(200).send({ message: "Avatar upload successfully"});
   }
 }
 

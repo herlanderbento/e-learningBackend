@@ -41,7 +41,7 @@ class UpdateModuleUseCase {
     const course = await this.coursesRepository.findById(course_id);
 
     if (!course) {
-      throw new AppError("Course does not exists!");
+      throw new AppError("Course does not exists!", 404);
     }
 
     const updateModule = await this.modulesRepository.findById(id);

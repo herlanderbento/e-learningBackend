@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
+import { classToPlain } from "class-transformer";
 import { PaginatedUserUseCase } from "./PaginatedUserUseCase";
 
 class PaginatedUserController {
@@ -12,7 +13,7 @@ class PaginatedUserController {
       page: page !== undefined ? parseInt(String(page), 10) : 0,
     });
 
-    return response.status(200).json(users);
+    return response.status(200).json(classToPlain(users));
   }
 }
 

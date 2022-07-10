@@ -8,7 +8,7 @@
     "dev": "ts-node-dev -r tsconfig-paths/register -r dotenv/config --inspect --transpile-only --ignore-watch nodes_modules --respawn src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
     "test": "NODE_ENV=test jest --runInBand --detectOpenHandles",
-    "seed:admin": "ts-node-dev -r dotenv/config  src/shared/infra/typeorm/seed/admin.ts"
+    "seed:admin": "ts-node-dev -r dotenv/config  src/shared/infra/admin/seed/admin.ts"
   },
   "dependencies": {
     "@sentry/node": "^6.16.1",

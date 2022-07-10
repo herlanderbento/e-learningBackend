@@ -23,6 +23,8 @@ const app = express();
 
 app.use(express.json());
 
+console.log(process.env.SEND_MAIL_PASS, process.env.SEND_MAIL_USER)
+
 app.use(cors());
 
 app.use("/avatar", express.static(resolve(`${upload.tmpFolder}/avatar`)));

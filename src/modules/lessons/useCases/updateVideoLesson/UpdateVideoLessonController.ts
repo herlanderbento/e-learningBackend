@@ -14,7 +14,9 @@ class UpdateVideoLessonController {
 
     await updateVideoLessonUseCase.execute({ id, video });
 
-    return response.status(200).send();
+    return response
+      .status(200)
+      .send({ message: "Lesson upload video successfully" });
   }
 }
 
